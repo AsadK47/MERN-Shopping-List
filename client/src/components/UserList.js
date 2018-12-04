@@ -42,7 +42,7 @@ class UserList extends Component {
 
 UserList.propTypes = {
   getUsers: PropTypes.func.isRequired,
-  item: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({

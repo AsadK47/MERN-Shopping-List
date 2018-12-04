@@ -15,7 +15,9 @@ import { addUser } from '../actions/userActions';
 class UserModal extends Component {
   state = {
     modal: false,
-    name: ''
+    name: '',
+    email: '',
+    password: ''
   };
 
   toggle = () => {
@@ -26,13 +28,17 @@ class UserModal extends Component {
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.email]: e.target.value });
+    this.setState({ [e.target.email]: e.target.value });
   };
 
   onSubmit = e => {
     e.preventDefault();
 
     const newUser = {
-      name: this.state.name
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password
     }
 
     // Add user via addUser action
@@ -59,12 +65,28 @@ class UserModal extends Component {
           <ModalBody>
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
-                <Label for="item">Item</Label>
+                <Label for="user">User</Label>
                 <Input
                   type="text"
                   name="name"
                   id="user"
                   placeholder="Add user"
+                  onChange={this.onChange}
+                />
+                <Label for="user">User</Label>
+                <Input
+                  type="text"
+                  name="email"
+                  id="user"
+                  placeholder="Add email"
+                  onChange={this.onChange}
+                />
+                <Label for="user">User</Label>
+                <Input
+                  type="password"
+                  name="password"
+                  id="user"
+                  placeholder="Add password"
                   onChange={this.onChange}
                 />
                 <Button
