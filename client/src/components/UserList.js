@@ -1,50 +1,33 @@
 import React, { Component } from 'react';
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import uuid from 'uuid';
+import { connect } from 'react-redux';
+import { getUsers, deleteUser } from '../actions/userActions';
+import PropTypes from 'prop-types';
 
 class UserList extends Component {
-  state = {
-    users: [
-      { id: uuid(), name: 'Asad' },
-      { id: uuid(), name: 'Luisa' },
-      { id: uuid(), name: 'James' },
-      { id: uuid(), name: 'Chris' }
-    ]
+  componentDidMount() {
+    this.props.getUsers();
+  }
+
+  onDeleteClick = (id) => {
+    this.props.deleteUser(id);
   }
 
   render() {
-    const { users } = this.state;
+    const { users } = this.props.user;
     return(
       <Container>
-        <Button
-          color="dark"
-          style={{marginBottom: '2rem'}}
-          onClick={() => {
-            const name = prompt('Enter User');
-            if(name) {
-              this.setState(state => ({
-                users: [...state.users, { id: uuid(), name }]
-              }));
-            }
-          }}
-        >Add User
-        </Button>
-
         <ListGroup>
           <TransitionGroup className="user-list">
-            {users.map(({ id, name }) => (
-              <CSSTransition key={id} timeout={500} classNames="fade">
+            {users.map(({ _id, name }) => (
+              <CSSTransition key={_id} timeout={500} classNames="fade">
                 <ListGroupItem>
                 <Button
                   className="remove-btn"
                   color="danger"
                   size="sm"
-                  onClick={() => {
-                    this.setState(state => ({
-                      users: state.users.filter(user => user.id !== id)
-                    }));
-                  }}
+                  onClick={this.onDeleteClick.bind(this, _id)}
                 >&times;</Button>
                   {name}
                 </ListGroupItem>
@@ -57,4 +40,13 @@ class UserList extends Component {
   }
 }
 
-export default UserList;
+UserList.propTypes = {
+  getUsers: PropTypes.func.isRequired,
+  item: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  user: state.user
+});
+
+export default connect(mapStateToProps, { getUsers, deleteUser })(UserList);
