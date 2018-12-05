@@ -73,7 +73,7 @@ class UserModal extends Component {
                   placeholder="Add user"
                   onChange={this.onChange}
                 />
-                <Label for="user">User</Label>
+                <Label for="email">Email</Label>
                 <Input
                   type="text"
                   name="email"
@@ -81,7 +81,7 @@ class UserModal extends Component {
                   placeholder="Add email"
                   onChange={this.onChange}
                 />
-                <Label for="user">User</Label>
+                <Label for="password">Password</Label>
                 <Input
                   type="password"
                   name="password"
